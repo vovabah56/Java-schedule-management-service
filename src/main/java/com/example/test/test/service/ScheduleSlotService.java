@@ -34,6 +34,10 @@ public class ScheduleSlotService implements iScheduleSlotService {
                 .findById(dto.getTemplate_id())
                 .orElseThrow(() -> new NotFoundException("Schedule Template с id = '" + dto.getTemplate_id() + "' не найден"));
 
+        if(dto.getBegin_time().isAfter(dto.getEnd_time())){
+             throw new NotFoundException("Неверное значение для времени слота");
+        }
+
         return _slotRep.save(ScheduleSlot.builder()
                 .begin_time(dto.getBegin_time())
                 .end_time(dto.getEnd_time())
