@@ -52,7 +52,7 @@ public class SchedulePeriodController {
      * @return  идентификатор Созданного периода.
       */
     @GetMapping("/all")
-    public ResponseEntity<Page<SchedulePeriod>> getPeriodsWithFilter(@Valid @RequestParam(required = false) FilterDTO filter,
+    public ResponseEntity<Page<SchedulePeriod>> getPeriodsWithFilter(@RequestParam(required = false) FilterDTO filter,
                                                                      @RequestParam(value = "field", required = false) String field,
                                                                      @RequestParam(value = "direction", required = false) String direction,
                                                                      @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
