@@ -3,17 +3,12 @@ package com.example.test.test.service;
 import com.example.test.test.DTO.CreateSlotDto;
 import com.example.test.test.entity.ScheduleSlot;
 import com.example.test.test.entity.ScheduleTemplate;
-import com.example.test.test.exception.BadRequestException;
 import com.example.test.test.exception.NotFoundException;
 import com.example.test.test.repository.ScheduleSlotRep;
 import com.example.test.test.repository.ScheduleTemplateRep;
 import com.example.test.test.service.iService.iScheduleSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Optional;
 
 
 @Service
@@ -30,13 +25,13 @@ public class ScheduleSlotService implements iScheduleSlotService {
     }
 
     @Override
-    public String createSlot(CreateSlotDto dto) throws NotFoundException, BadRequestException {
+    public String createSlot(CreateSlotDto dto) throws NotFoundException {
         ScheduleTemplate template = _templateRep
                 .findById(dto.getTemplate_id())
                 .orElseThrow(() -> new NotFoundException("Schedule Template с id = '" + dto.getTemplate_id() + "' не найден"));
 
         if(dto.getBegin_time().isAfter(dto.getEnd_time())){
-             throw new BadRequestException("Неверное значение для времени слота");
+             throw new NotFoundException("Неверное значение для времени слота");
         }
 
         return _slotRep.save(ScheduleSlot.builder()

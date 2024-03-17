@@ -1,12 +1,10 @@
 package com.example.test.test.entity;
-import jakarta.annotation.Nullable;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.PrePersist;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

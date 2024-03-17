@@ -3,7 +3,6 @@ package com.example.test.test.controller;
 
 import com.example.test.test.DTO.CreatePeriodDTO;
 import com.example.test.test.DTO.FilterDTO;
-import com.example.test.test.DTO.PeriodsPage;
 import com.example.test.test.entity.SchedulePeriod;
 import com.example.test.test.exception.NotFoundException;
 import com.example.test.test.service.iService.iSchedulePeriodService;
@@ -11,8 +10,6 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +22,14 @@ public class SchedulePeriodController {
     @Autowired
     public iSchedulePeriodService _periodService;
 
+
+    /**
+     * Метод для создания нового Периода.
+     *
+     * @param dto с данными для нового Периода.
+     * @return  идентификатор Созданного периода.
+     * @throws NotFoundException возникает если не найден один из: Employee, Schedule, ScheduleSlot
+     */
     @PostMapping
     public ResponseEntity<String> createPeriod(@RequestBody CreatePeriodDTO dto) throws NotFoundException {
 
@@ -36,7 +41,16 @@ public class SchedulePeriodController {
             throws NotFoundException {
         return new ResponseEntity<>(_periodService.getPeriodById(id), HttpStatus.OK);
     }
-
+    /**
+     * Метод для получения периодов с сортировкой и фильтрацией.
+     *
+     * @param field - название поля для сортировки.
+     * @param filter - данные для фильтрации.
+     * @param direction - направление для сортировки.
+     * @param pageNumber - номер страницы .
+     * @param pageSize - количество элементов на странице .
+     * @return  идентификатор Созданного периода.
+      */
     @GetMapping("/all")
     public ResponseEntity<Page<SchedulePeriod>> getPeriodsWithFilter(@Valid @RequestParam(required = false) FilterDTO filter,
                                                                      @RequestParam(value = "field", required = false) String field,

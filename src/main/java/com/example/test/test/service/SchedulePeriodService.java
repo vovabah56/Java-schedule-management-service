@@ -3,10 +3,8 @@ package com.example.test.test.service;
 
 import com.example.test.test.DTO.CreatePeriodDTO;
 import com.example.test.test.DTO.FilterDTO;
-import com.example.test.test.DTO.PeriodsPage;
 import com.example.test.test.entity.SchedulePeriod;
 import com.example.test.test.entity.ScheduleSlot;
-import com.example.test.test.exception.BadRequestException;
 import com.example.test.test.exception.NotFoundException;
 import com.example.test.test.repository.EmployeeRep;
 import com.example.test.test.repository.SchedulePeriodRep;
@@ -20,7 +18,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
-import java.time.Period;
 import java.util.List;
 import java.util.Objects;
 
@@ -81,10 +78,11 @@ public class SchedulePeriodService implements iSchedulePeriodService {
         periods.forEach((period)->{
             if(areTimeSegmentsIntersecting(period.getSlot().getBegin_time(), period.getSlot().getEnd_time(), slot.getBegin_time(), slot.getEnd_time())){
                 try {
-                    throw new BadRequestException("У сотрудника уже существует период на данное время");
-                } catch (BadRequestException e) {
+                    throw new NotFoundException("У сотрудника уже существует период на данное время");
+                } catch (NotFoundException e) {
                     throw new RuntimeException(e);
                 }
+
             }
         });
     }

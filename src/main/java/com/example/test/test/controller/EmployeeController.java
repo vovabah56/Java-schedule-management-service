@@ -10,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Контроллер для {@code CR} операций над {@link Employee}
+ */
+
 @RestController
 @RequestMapping("/api/employee")
 public class EmployeeController {
