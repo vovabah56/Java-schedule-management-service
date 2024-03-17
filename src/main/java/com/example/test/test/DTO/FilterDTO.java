@@ -23,7 +23,7 @@ public class FilterDTO {
     @Nullable
     String executorId;
     @Nullable
-    LocalTime begin_time;
+    private String begin_time;
     @Nullable
-    LocalTime end_time;
+    private String end_time;
 }
