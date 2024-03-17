@@ -2,7 +2,9 @@ package com.example.test.test.controller;
 
 
 import com.example.test.test.DTO.CreateScheduleDTO;
+import com.example.test.test.DTO.FullSchedule;
 import com.example.test.test.entity.Schedule;
+import com.example.test.test.exception.NotFoundException;
 import com.example.test.test.service.iService.iScheduleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,12 @@ public class ScheduleController {
     @GetMapping("/{id}")
     public ResponseEntity<Schedule> getScheduleById(@PathVariable String id){
         return new ResponseEntity<>(_scheduleService.getScheduleById(id), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<FullSchedule> getScheduleByIdOrName(@RequestParam(name = "id", required = false) String id,
+                                                              @RequestParam(name = "name", required = false) String name) throws NotFoundException {
+        return new ResponseEntity<>(_scheduleService.getScheduleByIdOrName(id, name), HttpStatus.OK);
     }
 
 }

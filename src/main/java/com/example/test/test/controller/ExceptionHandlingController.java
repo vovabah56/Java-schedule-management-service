@@ -1,6 +1,7 @@
 package com.example.test.test.controller;
 
 import com.example.test.test.DTO.RequestError;
+import com.example.test.test.exception.BadRequestException;
 import com.example.test.test.exception.NotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +29,23 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
                 "Некорректные входные данные",
                 Stream.of(exception.getMessage()).collect(Collectors.toList())
         );
+
+
+        return new ResponseEntity<>(error, error.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<RequestError> handleBadRequestException(HttpServletRequest request,
+                                                              BadRequestException exception
+    ) {
+        RequestError error = new RequestError(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST,
+                "Некорректные входные данные",
+                Stream.of(exception.getMessage()).collect(Collectors.toList())
+        );
+
 
 
         return new ResponseEntity<>(error, error.getHttpStatus());

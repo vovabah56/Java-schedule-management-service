@@ -5,6 +5,8 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalTime;
+
 @Data
 public class FilterDTO {
     @Nullable
@@ -20,4 +22,8 @@ public class FilterDTO {
     String administratorId;
     @Nullable
     String executorId;
+    @Nullable
+    LocalTime begin_time;
+    @Nullable
+    LocalTime end_time;
 }

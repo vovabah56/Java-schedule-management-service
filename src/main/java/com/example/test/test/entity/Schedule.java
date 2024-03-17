@@ -22,7 +22,7 @@ public class Schedule {
     private String id;
 
     @Nullable
-    private String schedule_name;
+    private String name;
 
     @PrePersist
     public void persist(){

@@ -49,6 +49,16 @@ public class FilterSpecification {
                     criteriaBuilder.equal(root.get("slot_type"), filter.getSlotType())));
         }
 
+        if(filter.getBegin_time() != null){
+            specificationPredicates.add(((root, query, criteriaBuilder) ->
+                    criteriaBuilder.greaterThanOrEqualTo(root.get("slot").get("begin_time"), filter.getBegin_time())));
+        }
+
+        if(filter.getEnd_time() != null){
+            specificationPredicates.add(((root, query, criteriaBuilder) ->
+                    criteriaBuilder.lessThanOrEqualTo(root.get("slot").get("end_time"), filter.getEnd_time())));
+        }
+
 
         return Specification.allOf(specificationPredicates);
     }

@@ -6,6 +6,7 @@ import com.example.test.test.DTO.FilterDTO;
 import com.example.test.test.DTO.PeriodsPage;
 import com.example.test.test.entity.SchedulePeriod;
 import com.example.test.test.entity.ScheduleSlot;
+import com.example.test.test.exception.BadRequestException;
 import com.example.test.test.exception.NotFoundException;
 import com.example.test.test.repository.EmployeeRep;
 import com.example.test.test.repository.SchedulePeriodRep;
@@ -65,10 +66,10 @@ public class SchedulePeriodService implements iSchedulePeriodService {
 
 
         List<SchedulePeriod> periods;
-        if(Objects.equals(dto.getAdministrator_id(), dto.getExecutor_id())){
-             periods = _periodRep.findSchedulePeriodsByEmployeeIdAndScheduleId(dto.getAdministrator_id(), dto.getSchedule_id());
+        if(Objects.equals(dto.getAdministrator_id(), dto.getExecutor_id())) {
+             periods = _periodRep.findSchedulePeriodsByEmployeeIdAndScheduleIdAndExecutorId(dto.getAdministrator_id(), dto.getSchedule_id(), null);
         }
-        else{
+        else {
              periods = _periodRep.findSchedulePeriodsByExecutorIdAndScheduleId(dto.getExecutor_id(), dto.getSchedule_id());
         }
 
@@ -80,8 +81,8 @@ public class SchedulePeriodService implements iSchedulePeriodService {
         periods.forEach((period)->{
             if(areTimeSegmentsIntersecting(period.getSlot().getBegin_time(), period.getSlot().getEnd_time(), slot.getBegin_time(), slot.getEnd_time())){
                 try {
-                    throw new NotFoundException("У сотрудника уже существует период на данное время");
-                } catch (NotFoundException e) {
+                    throw new BadRequestException("У сотрудника уже существует период на данное время");
+                } catch (BadRequestException e) {
                     throw new RuntimeException(e);
                 }
             }
